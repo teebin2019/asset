@@ -53,7 +53,8 @@
                                                                                 echo " " . 'Offline';
                                                                             }
                                                                             ?></span>
-                <?php if (isset($user['image'])): ?>
+                <?php 
+                if (isset($user)): ?>
                 <img class="img-profile rounded-circle" src="<?= base_url('uploads/') . $user['image'] ?>">
                 <?php else: ?>
                 <img class="img-profile rounded-circle" src="<?= base_url('backoffice/img/undraw_profile_2.svg') ?>">

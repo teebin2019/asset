@@ -50,8 +50,9 @@ class BackofficeController extends BaseController
     {
         $Furniturn = new AssetModel();
 
-        $data['asset'] = $Furniturn
+        $data['asset'] = $Furniturn->select("assets.*, CONCAT(YEAR(purchase_date)+assets.UsageLife ,'-' , '09' ,'-', 30) AS end ")
             ->findAll();
+
         // มูลค่าทั้งหมดของจำนวนเงิน
         $data['total_price'] = $Furniturn->selectSum('purchase_price')->findAll();
         // print_r($data['total_price']);
@@ -63,6 +64,7 @@ class BackofficeController extends BaseController
         $session = session();
 
         $data['user'] = $User->where('id', $session->get('id'))->first();
+
 
 
         return view('backoffice/asset/asset_view', $data);
@@ -915,6 +917,7 @@ class BackofficeController extends BaseController
                     'username' => $data['username'],
                     'email' => $data['email'],
                     'role' => $data['role'],
+                    'image' => $data['image'],
                     'log_action' => 1,
                     'isLoggedIn' => TRUE
                 ];
@@ -1092,5 +1095,136 @@ class BackofficeController extends BaseController
         return redirect()->to(base_url('reset_password_User/' . $id))->with('success', 'เปลี่ยนรหัสผ่านสำเร็จ');
     }
 
+    // หน้าปรินป์PDFแบบครุภัณฑืเดี่ยว
+    public function printpdf($id)
+    {
+        $AssetModel = new AssetModel();
+        $asset = $AssetModel->select("*")
+            ->join('suppliers', 'assets.supplier_id = suppliers.supplier_id', 'inner')
+            ->join('type_assets', 'type_assets.id_type = assets.id_type', 'inner')
+            ->join('department', 'department.department_id = assets.department_id', 'inner')
+            ->join('acquisition_method', 'acquisition_method.method_id = assets.method_id', 'inner')
+            ->join('location', 'location.id_location = assets.id_localtion', 'inner')
+            ->join('currency_types', 'currency_types.currency_id = assets.currency_id', 'inner')
+            ->like('assets.asset_id ', $id)->first();
+        // print_r($asset);
+        // die;
+
+
+        // ข้อมูลที่ใช้ในการคำนวณ
+        $cost = $asset['purchase_price'];         // ราคาทรัพย์สิน
+        // print_r($cost);
+        // die;
+        $usefulLife = $asset['UsageLife'];        // อายุการใช้งาน
+        $startDate = $asset['purchase_date'];
+        $yearsstartDate = date('Y', strtotime($startDate));
+        $monthsstartDate = date('m', strtotime($startDate));
+        $daystartDate = date('d', strtotime($startDate));
+        if ($monthsstartDate > 9) {
+            $yearsstartDate = date('Y', strtotime($startDate)) + 1;
+            $endDate = "{$yearsstartDate}-09-30";
+        } else {
+            $yearsstartDate = date("Y", strtotime($startDate));
+            $endDate = "{$yearsstartDate}-09-30";
+        }
+        // คำนวณเวลาในปี
+        $day = date_diff(date_create($startDate), date_create($endDate))->days;
+        $months = $day / 30;
+        $months = number_format($months);
+
+        // print_r($months);
+        // echo "ปี: {$years} เดือน: {$months}";
+        // die();
+        if (!empty($usefulLife)) {
+            // คำนวณค่าเสื่อมราคาต่อปี
+            $annualDepreciation = ($cost / $usefulLife) * $months / 12;
+            // คำนวณค่าเสื่อมปีถัดไป
+            $nextYearDepreciation = $cost / $usefulLife;
+            $annualDepreciation1 = (($cost / $usefulLife) * (12 - $months)) / 12 ;
+        }
+
+        if (!empty($usefulLife)) {
+            // ข้อมูลวันที่เริ่มต้น
+            $startYear = date('Y', strtotime($startDate));
+            $startDate = "{$startYear}-09-30"; // 30 กันยายน
+            $data = [
+                'asset' => $asset,
+                'cost' => $cost,
+                'usefulLife' => $usefulLife,
+                'annualDepreciation' => $annualDepreciation,
+                'annualDepreciation1' => $annualDepreciation1,
+                'startDate' => $startDate,
+                'nextYearDepreciation' => $nextYearDepreciation,
+            ];
+        } else {
+            $startYear = date('Y', strtotime($startDate));
+            $data = [
+                'asset' => $asset,
+                'cost' => $cost,
+                'usefulLife' => $usefulLife,
+                'startDate' => $startDate,
+            ];
+        }
+
+        return view('backoffice/asset/print_pdf', $data);
+    }
+
+    // print pdf รวม
+    public function print_pdf_value()
+    {
+        helper(['form']);
+        // ตรวจสอบข้อมูลที่ส่งมาจากฟอร์มค้นหา
+        $searchid = $this->request->getPost('search_id');
+        $searchname = $this->request->getPost('search_name');
+        $searchdepartment = $this->request->getPost('search_department');
+        $searchyear = $this->request->getPost('search_year');
+        $searchmonth = $this->request->getPost('search_month');
+        $searchday = $this->request->getPost('search_day');
+
+        // print_r($searchmonth);
+        // die;
+
+        // ดำเนินการค้นหาข้อมูลตามคำค้นหา
+        $model = new AssetModel(); // แทน YourModel ด้วยชื่อโมเดลของคุณ
+
+        $query = $model->select("assets.* , suppliers.* , type_assets.* , department.* , acquisition_method.* , location.* , currency_types.*,CONCAT(YEAR(purchase_date)+assets.UsageLife ,'-' , '09' ,'-', 30) AS end")
+            ->join('suppliers', 'assets.supplier_id = suppliers.supplier_id')
+            ->join('type_assets', 'type_assets.id_type = assets.id_type')
+            ->join('department', 'department.department_id = assets.department_id')
+            ->join('acquisition_method', 'acquisition_method.method_id = assets.method_id')
+            ->join('location', 'location.id_location = assets.id_localtion')
+            ->join('currency_types', 'currency_types.currency_id = assets.currency_id')
+            ->like('assets.name', $searchname);
+
+        if (!empty($searchdepartment)) {
+            $query->where('assets.department_id', $searchdepartment);
+        }
+        if (!empty($searchid)) {
+            $query->like('assets.asset_id', $searchid);
+        }
+
+        if (!empty($searchyear)) {
+            $query->where('YEAR(assets.purchase_date)', $searchyear);
+        }
+
+
+        if (!empty($searchmonth)) {
+            $query->where('MONTH(assets.purchase_date)', $searchmonth);
+        }
+        if (!empty($searchday)) {
+            $query->where('DAY(assets.purchase_date)', $searchday);
+        }
+
+        // คำสั่งจากฟังก์ชันที่เรียก เพื่อดึงข้อมูลจากฐานข้อมูล
+        $results = $query->findAll();
+
+        // print_r($results);
+        // die;
+        return view('backoffice/asset/print_pdf_value', [
+            'results' => $results
+        ]);
+
+
+    }
 
 }

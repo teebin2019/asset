@@ -13,7 +13,9 @@
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('backoffice/vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('backoffice/css/sb-admin-2.min.css') ?>" rel="stylesheet">
@@ -43,21 +45,21 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <?php if (session()->getFlashdata('success')) : ?>
+                    <?php if (session()->getFlashdata('success')): ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <?php echo session()->getFlashdata('success'); ?>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    <?php elseif (session()->getFlashdata('edits')) : ?>
+                    <?php elseif (session()->getFlashdata('edits')): ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <?php echo session()->getFlashdata('edits'); ?>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    <?php elseif (session()->getFlashdata('delece')) : ?>
+                    <?php elseif (session()->getFlashdata('delece')): ?>
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <?php echo session()->getFlashdata('delece'); ?>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -87,25 +89,31 @@
                                 <tbody>
                                     <?php
                                     $i = 1;
-                                    foreach ($log as $as) : ?>
+                                    foreach ($log as $as): ?>
                                         <tr>
                                             <td>
                                                 <?= $i ?>
                                             </td>
-                                            <td><?php if ($as['log_action'] == 0) : ?>
-                                                    ออก
-                                                <?php else : ?>
-                                                    เข้า
-                                                <?php endif; ?></td>
-                                            <td><?php
+                                            <td>
+                                                <?php if ($as['log_action'] == 0): ?>
+                                                    ออกจากระบบ
+                                                <?php else: ?>
+                                                    เข้าสู่ระบบ
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php
                                                 $date = thaidate('j F Y', $as['creart_at']);
                                                 echo $date;
 
-                                                ?></td>
-                                            <td><?php
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
                                                 $date = date_create($as['creart_at']);
                                                 echo date_format($date, "H:i:s");
-                                                ?></td>
+                                                ?>
+                                            </td>
                                         </tr>
                                         <?php $i++; ?>
                                     <?php endforeach ?>
@@ -160,7 +168,7 @@
                     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             $('#myTable').DataTable();
                         });
                     </script>

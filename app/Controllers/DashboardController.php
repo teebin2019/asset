@@ -45,6 +45,8 @@ class DashboardController extends BaseController
         $session = session();
       
         $data['user'] = $User->where('id', $session->get('id'))->first();
+        // print_r($data['user']);
+        // die;
 
 
         return view('backoffice/users/dashboard_user', $data);

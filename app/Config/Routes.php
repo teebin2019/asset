@@ -146,3 +146,8 @@ $routes->post('/setting', 'BackofficeController::upload');
 // Reset Password
 $routes->get('reset_password_User/(:num)', 'BackofficeController::reset_password/$1');
 $routes->post('reset_password_User', 'BackofficeController::resetpasword');
+
+
+// หน้าปริ้นPdfแบบครุภัณฑ์ตัวเดียว
+$routes->get('/print_pdf/(:any)', 'BackofficeController::printpdf/$1');
+$routes->match(['get', 'post'],'/print_pdf_value', 'BackofficeController::print_pdf_value');

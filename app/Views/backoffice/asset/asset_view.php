@@ -13,7 +13,9 @@
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('backoffice/vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('backoffice/css/sb-admin-2.min.css') ?>" rel="stylesheet">
@@ -42,21 +44,21 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <?php if (session()->getFlashdata('success')) : ?>
+                    <?php if (session()->getFlashdata('success')): ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <?php echo session()->getFlashdata('success'); ?>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    <?php elseif (session()->getFlashdata('edits')) : ?>
+                    <?php elseif (session()->getFlashdata('edits')): ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <?php echo session()->getFlashdata('edits'); ?>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    <?php elseif (session()->getFlashdata('delect')) : ?>
+                    <?php elseif (session()->getFlashdata('delect')): ?>
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <?php echo session()->getFlashdata('delect'); ?>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -70,7 +72,9 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">ครุภัณฑ์</h1>
-                        <a href="<?= site_url('/asset_add') ?>" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm" id="assets_add"><i class="fas fa-download fa-sm text-white-50"></i>เพิ่มข้อมูล</a>
+                        <a href="<?= site_url('/asset_add') ?>"
+                            class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm" id="assets_add"><i
+                                class="fas fa-download fa-sm text-white-50"></i>เพิ่มข้อมูล</a>
                     </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -92,39 +96,53 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-active">
-                                    <?php foreach ($asset as $as) : ?>
+                                    <?php foreach ($asset as $as): ?>
                                         <tr>
-                                            <td width="23%"><?= $as['asset_id'] ?></td>
-                                            <td><?= $as['name'] ?></td>
+                                            <td width="23%">
+                                                <?= $as['asset_id'] ?>
+                                            </td>
+                                            <td>
+                                                <?= $as['name'] ?>
+                                            </td>
                                             <td class="text-center" width="15%">
                                                 <?php
                                                 if ($as['purchase_date'] == null) {
                                                     echo "ไม่ระบุ";
                                                 } else {
-                                                    $date =   thaidate('j F Y', $as['purchase_date']);
+                                                    $date = thaidate('j F Y', $as['purchase_date']);
                                                     echo $date;
-                                                }  ?>
+                                                } ?>
                                             </td>
-                                            <td><?= $as['purchase_price'] ?></td>
+                                            <td>
+                                                <?= $as['purchase_price'] ?>
+                                            </td>
+                                         
                                             <td class="text-center">
                                                 <!-- หมดอายุ -->
-                                                <?php if ($as['end_date'] < date("Y-m-d")) : ?>
+                                                <?php if ($as['end'] < date("Y-m-d")): ?>
                                                     <span class="badge badge-danger">หมดอายุ</span>
-                                                <?php else : ?>
+                                                <?php else: ?>
                                                     <span class="badge badge-success">ไม่หมดอายุ</span>
                                                 <?php endif; ?>
 
                                             </td>
 
-                                            <td class="text-center "><a href="<?php echo site_url('asset-detail/' . $as['asset_id']) ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                            <td class="text-center "><a
+                                                    href="<?php echo site_url('asset-detail/' . $as['asset_id']) ?>"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                                        <path
+                                                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
                                                     </svg></a></td>
                                             <td>
-                                                <a href="<?php echo base_url('asset-edit-view/' . $as['asset_id']); ?>" class="btn btn-primary btn-sm" id="edit">แก้ไข</a>
+                                                <a href="<?php echo base_url('asset-edit-view/' . $as['asset_id']); ?>"
+                                                    class="btn btn-primary btn-sm" id="edit">แก้ไข</a>
                                             </td>
                                             <td>
-                                                <a href="<?php echo base_url('assets-delete/' . $as['asset_id']); ?>" class="btn btn-danger btn-sm" id="delete">ลบ</a>
+                                                <a href="<?php echo base_url('assets-delete/' . $as['asset_id']); ?>"
+                                                    class="btn btn-danger btn-sm" id="delete">ลบ</a>
                                             </td>
                                         </tr>
                                     <?php endforeach ?>
@@ -134,8 +152,10 @@
                                     <!-- ให้ 1 colom รวมกันไปเลย -->
                                     <td colspan="3" class="text-center">รวม</td>
 
-                                    <?php foreach ($total_price as $t) : ?>
-                                        <td class="text-center"><?= $t['purchase_price'] ?></td>
+                                    <?php foreach ($total_price as $t): ?>
+                                        <td class="text-center">
+                                            <?= $t['purchase_price'] ?>
+                                        </td>
                                     <?php endforeach ?>
                                     <td colspan="4" class="text-center">บาท</td>
                                 </tr>
@@ -184,7 +204,7 @@
 
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             $('#myTable').DataTable({
                                 "language": {
                                     "lengthMenu": "แสดง _MENU_ รายการ",
@@ -207,7 +227,7 @@
 
                     <script>
                         // เมื่อกดปุ่มเพิ่ม แบบ SweetAlert2
-                        $('#assets_add').click(function(e) {
+                        $('#assets_add').click(function (e) {
                             // deleteUrl 
                             var AddUrl = $(this).attr('href');
                             var id = $(this).attr('asset_id');
@@ -232,7 +252,7 @@
                     <script>
                         // เมื่อกดปุ่มลลบ แล้วถามว่าต้องการลบหรือไม่ แบบ SweetAlert2 
                         // ใช้ id
-                        $(document).on('click', '#edit', function(e) {
+                        $(document).on('click', '#edit', function (e) {
                             e.preventDefault();
                             // deleteUrl 
                             var EditUrl = $(this).attr('href');
@@ -259,7 +279,7 @@
                     <script>
                         // เมื่อกดปุ่มลลบ แล้วถามว่าต้องการลบหรือไม่ แบบ SweetAlert2 
                         // ใช้ id
-                        $(document).on('click', '#delete', function(e) {
+                        $(document).on('click', '#delete', function (e) {
                             e.preventDefault();
                             // deleteUrl 
                             var EditUrl = $(this).attr('href');

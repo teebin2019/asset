@@ -16,12 +16,16 @@ $session = session();
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('backoffice/vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('backoffice/css/sb-admin-2.min.css') ?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
 </head>
 
@@ -46,80 +50,98 @@ $session = session();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <?php if (empty($results)) : ?>
+                    <?php if (empty($results)): ?>
                         <h1>ไม่มีข้อมูล</้>
-                        <?php else : ?>
-
-
+                        <?php else: ?>
                             <!-- Page Heading -->
-
-
-                            <?php if (!empty($searchTerm)) : ?>
-                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา : <?= "ชื่อครุภัณฑ์" . " " . $searchTerm ?> </h1>
-                            <?php elseif (!empty($searchid)) : ?>
-                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา : <?= "เลขครุภัณฑ์" . " " . $searchid ?> </h1>
-                            <?php elseif (!empty($searchdepartment)) : ?>
-                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา : <?= "สาขา" . " " . $dep['department_name'] ?> </h1>
-                            <?php elseif (!empty($searchyear)) : ?>
-                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา : <?= "ปี" . " " . ($searchyear + 543) ?> </h1>
-                            <?php elseif (!empty($search_month)) : ?>
-                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา : <?= "เดือน" . " " ?>
-                                    <?php if ($search_month == 1) : ?>
+                            <?php if (!empty($searchTerm)): ?>
+                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา :
+                                    <?= "ชื่อครุภัณฑ์" . " " . $searchTerm ?>
+                                </h1>
+                            <?php elseif (!empty($searchid)): ?>
+                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา :
+                                    <?= "เลขครุภัณฑ์" . " " . $searchid ?>
+                                </h1>
+                            <?php elseif (!empty($searchdepartment)): ?>
+                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา :
+                                    <?= "สาขา" . " " . $dep['department_name'] ?>
+                                </h1>
+                            <?php elseif (!empty($searchyear)): ?>
+                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา :
+                                    <?= "ปี" . " " . ($searchyear + 543) ?>
+                                </h1>
+                            <?php elseif (!empty($search_month)): ?>
+                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา :
+                                    <?= "เดือน" . " " ?>
+                                    <?php if ($search_month == 1): ?>
                                         มกราคม
-                                    <?php elseif ($search_month == 2) : ?>
+                                    <?php elseif ($search_month == 2): ?>
                                         กุมภาพ
-                                    <?php elseif ($search_month == 3) : ?>
+                                    <?php elseif ($search_month == 3): ?>
                                         มีนาคม
-                                    <?php elseif ($search_month == 4) : ?>
+                                    <?php elseif ($search_month == 4): ?>
                                         เมษายน
-                                    <?php elseif ($search_month == 5) : ?>
+                                    <?php elseif ($search_month == 5): ?>
                                         พฤษภาคม
-                                    <?php elseif ($search_month == 6) : ?>
+                                    <?php elseif ($search_month == 6): ?>
                                         มิถุนายน
-                                    <?php elseif ($search_month == 7) : ?>
+                                    <?php elseif ($search_month == 7): ?>
                                         กรกฎาคม
-                                    <?php elseif ($search_month == 8) : ?>
+                                    <?php elseif ($search_month == 8): ?>
                                         สิงหาคม
-                                    <?php elseif ($search_month == 9) : ?>
+                                    <?php elseif ($search_month == 9): ?>
                                         กันยายน
-                                    <?php elseif ($search_month == 10) : ?>
+                                    <?php elseif ($search_month == 10): ?>
                                         ตุลาคม
-                                    <?php elseif ($search_month == 11) : ?>
+                                    <?php elseif ($search_month == 11): ?>
                                         พฤศจิกายน
-                                    <?php elseif ($search_month == 12) : ?>
+                                    <?php elseif ($search_month == 12): ?>
                                         ธันวาคม
                                     <?php endif; ?>
                                 </h1>
-                            <?php elseif (!empty($search_day)) : ?>
-                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา : <?= "วันที่" . " " . $search_day  ?> </h1>
-                            <?php else : ?>
+                            <?php elseif (!empty($search_day)): ?>
+                                <h1 class="h3 mb-0 text-gray-800 mb-2">ผลลัพธ์ที่ค้นหา :
+                                    <?= "วันที่" . " " . $search_day ?>
+                                </h1>
+                            <?php else: ?>
                                 <h1 class="h3 mb-2 text-gray-800">ไม่ได้กรอกข้อมูล</h1>
                             <?php endif ?>
                             <p class="d-flex justify-content-start mt-3 ">
-                                <a class="btn btn-info" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <a class="btn btn-info mx-2" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
                                     ค้นหา
+                                </a>
+                                <a class="btn btn-info" data-bs-toggle="collapse" href="#print" role="button"
+                                    aria-expanded="false" aria-controls="print">
+                                    ปริ้น
                                 </a>
                             </p>
                             <div class="collapse" id="collapseExample">
                                 <div class="card card-body">
-                                    <form action="<?= base_url('search/search')  ?>" method="post">
+                                    <form action="<?= base_url('search/search') ?>" method="post">
                                         <div class="container text-center">
                                             <div class="row align-items-start">
                                                 <div class="col mt-2 mb-2">
                                                     <label for="inputEmail4" class="form-label">รหัสครุภัณฑ์</label>
-                                                    <input type="text" class="form-control" name="search_id" id="inputEmail4" value="<?= session('search_id')  ?>">
+                                                    <input type="text" class="form-control" name="search_id"
+                                                        id="inputEmail4" value="<?= $_POST['search_id'] ?>">
                                                 </div>
                                                 <div class="col mt-2 mb-2">
                                                     <label for="inputPassword4" class="form-label">ชื่อครุภัณฑ์</label>
-                                                    <input type="text" name="search_name" class="form-control" id="inputPassword4" value="<?= set_value('search_name') ?>">
+                                                    <input type="text" name="search_name" class="form-control"
+                                                        id="inputPassword4" value="<?= $_POST['search_name'] ?>">
                                                 </div>
                                                 <div class="col mt-2 mb-2">
                                                     <label for="inputState" class="form-label">สาขาวิชา</label>
                                                     <br>
                                                     <select id="inputState" name="search_department" class="form-select">
-                                                        <option >--เลือกสาขา--</option>
-                                                        <?php foreach ($department as $row) : ?>
-                                                            <option value="<?= $row['department_id'] ?>"><?= $row['department_name'] ?></option>
+                                                        <option value="<?= $_POST['search_department'] ?>" hidden>
+                                                            <?= $dep['department_name'] ?>
+                                                        </option>
+                                                        <?php foreach ($department as $row): ?>
+                                                            <option value="<?= $row['department_id'] ?>">
+                                                                <?= $row['department_name'] ?>
+                                                            </option>
                                                         <?php endforeach; ?>
                                                     </select>
                                                 </div>
@@ -131,9 +153,15 @@ $session = session();
                                                     <label for="inputAddress2" class="form-label">ปี</label><br>
                                                     <select name="search_year">
 
-                                                        <option value="">--เลือกปี--</option>
-                                                        <?php for ($i = 2006; $i <= date("Y"); $i++) : ?>
-                                                            <option value="<?= $i ?>"><?= $i + 543 ?></option>
+                                                        <option value="<?= $_POST['search_year'] ?>" hidden>
+                                                            <?= $_POST['search_year'] ?>
+                                                        </option>
+
+
+                                                        <?php for ($i = 2006; $i <= date("Y"); $i++): ?>
+                                                            <option value="<?= $i ?>">
+                                                                <?= $i + 543 ?>
+                                                            </option>
                                                         <?php endfor; ?>
                                                     </select>
 
@@ -142,9 +170,13 @@ $session = session();
                                                     <label for="inputAddress2" class="form-label">เดือน</label><br>
                                                     <select name="search_month">
 
-                                                        <option value="">--เลือกเดือน--</option>
-                                                        <?php for ($i = 1; $i <= 12; $i++) : ?>
-                                                            <option value="<?= $i ?>"><?= $i  ?></option>
+                                                        <option value="<?= $_POST['search_month'] ?>" hidden>
+                                                            <?= $_POST['search_month'] ?>
+                                                        </option>
+                                                        <?php for ($i = 1; $i <= 12; $i++): ?>
+                                                            <option value="<?= $i ?>">
+                                                                <?= $i ?>
+                                                            </option>
                                                         <?php endfor; ?>
                                                     </select>
 
@@ -152,9 +184,101 @@ $session = session();
                                                 <div class="col mt-2 mb-2">
                                                     <label for="inputAddress2" class="form-label">วันที่</label><br>
                                                     <select name="search_day">
-                                                        <option value="">--วันที่--</option>
-                                                        <?php for ($i = 1; $i <= 31; $i++) : ?>
-                                                            <option value="<?= $i ?>"><?= $i  ?></option>
+                                                        <option value="<?= $_POST['search_day'] ?>" hidden>
+                                                            <?= $_POST['search_day'] ?>
+                                                        </option>
+                                                        <?php for ($i = 1; $i <= 31; $i++): ?>
+                                                            <option value="<?= $i ?>">
+                                                                <?= $i ?>
+                                                            </option>
+                                                        <?php endfor; ?>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mt-3 text-center ">
+                                            <button type="submit" class="btn btn-primary text-center">ค้นหาครุภัณฑ์</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="collapse" id="print">
+                                <div class="card card-body">
+                                    <form action="<?= base_url('/print_pdf_value') ?>" method="post">
+                                        <div class="container text-center">
+                                            <div class="row align-items-start">
+                                                <div class="col mt-2 mb-2">
+                                                    <label for="inputEmail4" class="form-label">รหัสครุภัณฑ์</label>
+                                                    <input type="text" class="form-control" name="search_id"
+                                                        id="inputEmail4" value="<?= $_POST['search_id'] ?>">
+                                                </div>
+                                                <div class="col mt-2 mb-2">
+                                                    <label for="inputPassword4" class="form-label">ชื่อครุภัณฑ์</label>
+                                                    <input type="text" name="search_name" class="form-control"
+                                                        id="inputPassword4" value="<?= $_POST['search_name'] ?>">
+                                                </div>
+                                                <div class="col mt-2 mb-2">
+                                                    <label for="inputState" class="form-label">สาขาวิชา</label>
+                                                    <br>
+                                                    <select id="inputState" name="search_department" class="form-select">
+                                                        <option value="<?= $_POST['search_department'] ?>" hidden>
+                                                            <?= $dep['department_name'] ?>
+                                                        </option>
+                                                        <?php foreach ($department as $row): ?>
+                                                            <option value="<?= $row['department_id'] ?>">
+                                                                <?= $row['department_name'] ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container text-center">
+                                            <div class="row align-items-center">
+                                                <div class="col mt-2 mb-2">
+                                                    <label for="inputAddress2" class="form-label">ปี</label><br>
+                                                    <select name="search_year">
+
+                                                        <option value="<?= $_POST['search_year'] ?>" hidden>
+                                                            <?= $_POST['search_year'] ?>
+                                                        </option>
+
+
+                                                        <?php for ($i = 2006; $i <= date("Y"); $i++): ?>
+                                                            <option value="<?= $i ?>">
+                                                                <?= $i + 543 ?>
+                                                            </option>
+                                                        <?php endfor; ?>
+                                                    </select>
+
+                                                </div>
+                                                <div class="col mt-2 mb-2">
+                                                    <label for="inputAddress2" class="form-label">เดือน</label><br>
+                                                    <select name="search_month">
+
+                                                        <option value="<?= $_POST['search_month'] ?>" hidden>
+                                                            <?= $_POST['search_month'] ?>
+                                                        </option>
+                                                        <?php for ($i = 1; $i <= 12; $i++): ?>
+                                                            <option value="<?= $i ?>">
+                                                                <?= $i ?>
+                                                            </option>
+                                                        <?php endfor; ?>
+                                                    </select>
+
+                                                </div>
+                                                <div class="col mt-2 mb-2">
+                                                    <label for="inputAddress2" class="form-label">วันที่</label><br>
+                                                    <select name="search_day">
+                                                        <option value="<?= $_POST['search_day'] ?>" hidden>
+                                                            <?= $_POST['search_day'] ?>
+                                                        </option>
+                                                        <?php for ($i = 1; $i <= 31; $i++): ?>
+                                                            <option value="<?= $i ?>">
+                                                                <?= $i ?>
+                                                            </option>
                                                         <?php endfor; ?>
                                                     </select>
 
@@ -172,42 +296,48 @@ $session = session();
 
 
 
+
                             <div class="card-body">
                                 <table id="myTable" class="table table-bordered border-dark" width="100%">
                                     <thead class="table table-dark">
                                         <tr>
                                             <th>รหัสครุภัณฑ์</th>
                                             <th>ชื่อ</th>
-                                            <th>ประเภท</th>
-                                            <th width="10%">วิธีการได้รับมา</th>
-                                            <th width="10%">วันที่ซื้อ</th>
-                                            <th>ราคาที่ซื้อ</th>
-                                            <th>สถานที่ตั้ง</th>
+                                            <th width="8%">วิธีการได้รับมา</th>
                                             <th>สถานะปัจจุบัน</th>
+                                            <?php $role = $session->get('role');
+                                            if (isset($role)) { ?>
+                                                <th>ดาวน์โหลด</th>
+                                            <?php } ?>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($results as $as) : ?>
+                                        <?php foreach ($results as $as): ?>
                                             <tr>
-                                                <td width="23%"><a href="<?php echo site_url('asset-detail/' . $as['asset_id']) ?>"><?= $as['asset_id'] ?></a> </td>
-                                                <td><?= $as['name'] ?></td>
-                                                <td><?= $as['name_type'] ?></td>
-                                                <td width="18%"><?= $as['acquisition_method_name'] ?></td>
-                                                <td width="15%"><?php
-                                                    $data =   thaidate('j F Y', $as['purchase_date']);
-                                                    echo $data;
-                                                    ?>
+                                                <td width="23%"><a
+                                                        href="<?php echo site_url('asset-detail/' . $as['asset_id']) ?>">
+                                                        <?= $as['asset_id'] ?>
+                                                    </a> </td>
+                                                <td>
+                                                    <?= $as['name'] ?>
                                                 </td>
-                                                <td><?= $as['purchase_price'] ?></td>
-                                                <td><?= $as['name_location'] ?></td>
+
+                                                <td width="18%">
+                                                    <?= $as['acquisition_method_name'] ?>
+                                                </td>
+
                                                 <td> <!-- หมดอายุ -->
-                                                    <?php if ($as['end_date'] < date("Y-m-d")) : ?>
+                                                    <?php if ($as['end'] < date("Y-m-d")): ?>
                                                         <span class="badge badge-danger">หมดอายุ</span>
-                                                    <?php else : ?>
+                                                    <?php else: ?>
                                                         <span class="badge badge-success">ไม่หมดอายุ</span>
                                                     <?php endif; ?>
                                                 </td>
-
+                                                <?php if (isset($role)) { ?>
+                                                    <td>
+                                                        <a href="<?= base_url('/print_pdf/' . $as['asset_id']) ?>">ดาวน์โหลด</a>
+                                                    </td>
+                                                <?php } ?>
                                             </tr>
                                         <?php endforeach ?>
                                     </tbody>
@@ -217,7 +347,8 @@ $session = session();
                         <!-- ทำปุ่มย้อนกับ -->
                         <div class="col-md-12 text-center">
                             <div class="btn-group">
-                                <a href="<?= site_url('search') ?>"> <button type="button" class="btn btn-primary">ย้อนกลับ</button></a>
+                                <a href="<?= site_url('search') ?>"> <button type="button"
+                                        class="btn btn-primary">ย้อนกลับ</button></a>
                             </div>
                             <!-- /.container-fluid -->
                         </div>
@@ -265,7 +396,7 @@ $session = session();
             <script src="<?= base_url('backoffice/js/demo/chart-pie-demo.js') ?>"></script>
             <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
             <script>
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $('#myTable').DataTable();
                 });
             </script>
@@ -273,7 +404,10 @@ $session = session();
             <script>
                 const bsCollapse = new bootstrap.Collapse('#myCollapse', {
                     toggle: false
-                })
+                });
+                const bsCollapse = new bootstrap.Collapse('#print', {
+                    toggle: false
+                });
             </script>
 
 </body>

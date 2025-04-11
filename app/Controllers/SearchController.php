@@ -27,7 +27,7 @@ class SearchController extends BaseController
         $session = session();
 
         $data3 = $User->where('id', $session->get('id'))->first();
-        return view('search_form', ['department' => $data, 'messages' =>  $data1, 'alart' =>  $data2, 'user' =>  $data3]);
+        return view('search_form', ['department' => $data, 'messages' => $data1, 'alart' => $data2, 'user' => $data3]);
     }
 
     public function search()
@@ -47,7 +47,7 @@ class SearchController extends BaseController
         // ดำเนินการค้นหาข้อมูลตามคำค้นหา
         $model = new AssetModel(); // แทน YourModel ด้วยชื่อโมเดลของคุณ
 
-        $query = $model->select('assets.* , suppliers.* , type_assets.* , department.* , acquisition_method.* , location.* , currency_types.*')
+        $query = $model->select("assets.* , suppliers.* , type_assets.* , department.* , acquisition_method.* , location.* , currency_types.*,CONCAT(YEAR(purchase_date)+assets.UsageLife ,'-' , '09' ,'-', 30) AS end")
             ->join('suppliers', 'assets.supplier_id = suppliers.supplier_id')
             ->join('type_assets', 'type_assets.id_type = assets.id_type')
             ->join('department', 'department.department_id = assets.department_id')
@@ -59,13 +59,15 @@ class SearchController extends BaseController
         if (!empty($searchdepartment)) {
             $query->where('assets.department_id', $searchdepartment);
         }
+        if (!empty($searchid)) {
+            $query->like('assets.asset_id', $searchid);
+        }
 
         if (!empty($searchyear)) {
             $query->where('YEAR(assets.purchase_date)', $searchyear);
         }
-        if (!empty($searchid)) {
-            $query->like('assets.asset_id', $searchid);
-        }
+
+
         if (!empty($searchmonth)) {
             $query->where('MONTH(assets.purchase_date)', $searchmonth);
         }
@@ -74,7 +76,9 @@ class SearchController extends BaseController
         }
 
         // คำสั่งจากฟังก์ชันที่เรียก เพื่อดึงข้อมูลจากฐานข้อมูล
-        $results =  $query->findAll();
+        $results = $query->findAll();
+        // print_r($results[0]);
+        // die;
 
 
         $Message = new Message();
@@ -84,13 +88,14 @@ class SearchController extends BaseController
         $deparment = new DepartmentModel();
 
         $data = $deparment->findAll();
-        $dapartment =
-            $deparment->where('department_id', $searchdepartment)->first();
+        $dapartment = $deparment->where('department_id', $searchdepartment)->first();
+        // print_r($dapartment);
+        // die;
 
         $User = new UsersModel();
         $session = session();
 
         $data3 = $User->where('id', $session->get('id'))->first();
-        return view('search_result', ['searchTerm' => $searchname, 'results' => $results, 'searchid' =>  $searchid, 'searchdepartment' => $searchdepartment, 'searchyear' => $searchyear, 'messages' =>  $data1, 'alart' =>  $data2, 'department' => $data, 'search_month' => $searchmonth, 'search_day' => $searchday, 'dep' => $dapartment,'user' => $data3]);
+        return view('search_result', ['searchTerm' => $searchname, 'results' => $results, 'searchid' => $searchid, 'searchdepartment' => $searchdepartment, 'searchyear' => $searchyear, 'messages' => $data1, 'alart' => $data2, 'department' => $data, 'search_month' => $searchmonth, 'search_day' => $searchday, 'dep' => $dapartment, 'user' => $data3]);
     }
 }
